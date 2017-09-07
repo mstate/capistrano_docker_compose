@@ -54,6 +54,7 @@ module CapistranoDockerCompose
 
     def self.yaml_file
       begin
+        puts "@@project_root_folder is: #{@@project_root_folder}"
         file = YAML.load_file([@@project_root_folder,"config","version.yml"].join('/'))
       rescue Errno::ENOENT => error
         version_hash = {
