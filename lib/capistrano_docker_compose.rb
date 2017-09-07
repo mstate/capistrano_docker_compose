@@ -1,0 +1,1 @@
+require_relative 'capistrano_docker_compose/version'

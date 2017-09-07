@@ -26,3 +26,21 @@ The variables below are optional (and can be set in deploy.rb). Default values a
     set :docker_services_for_quick_restart, %w{ app actioncable sidekiq web }
     set :traefik_directory, "/docker/compose_files_and_data/traefik"
 
+This gem also includes a CapistranoDockerCompose::Version class that tracks the current version of the application in config/version.yml as well as release history.
+
+The version is in the form: major.minor.incremental
+
+CapistranoDockerCompose::Version offers the following tasks:
+
+    rake docker:increment_version
+
+and also the following class methods:
+
+    CapistranoDockerCompose::Version.current - Current version
+    CapistranoDockerCompose::Version.increment! - Increases the incremental version
+The `increment!` method also provides an optional argument type:
+
+    CapistranoDockerCompose::Version.increment!(type: :major) - E.g. 1.2.3 -> 2.0.0
+    CapistranoDockerCompose::Version.increment!(type: :minor) - E.g. 1.2.3 -> 1.3.0
+    CapistranoDockerCompose::Version.increment!(type: :incremental) - (This is the default) E.g. 1.2.13 -> 1.2.14
+
