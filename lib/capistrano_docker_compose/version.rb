@@ -41,9 +41,8 @@ module CapistranoDockerCompose
       return my_version
     end
 
-    def self.replace_version_constant_in_file!(current_version)
-      yaml = YAML.load_file(Rails.root.join("config","version.yml"))
-      File.write('/tmp/test.yml', d.to_yaml)
+    def self.replace_version_constant_in_file!(file_path, new_version)
+      File.write(file_path, self.new_version)
     end
 
     def self.yaml_file
@@ -79,7 +78,5 @@ module CapistranoDockerCompose
       Dir.pwd
     end
     VERSION ||= self.own_current
-
-
   end
 end
