@@ -77,6 +77,7 @@ module CapistranoDockerCompose
     else
       Dir.pwd
     end
+    puts "@@project_root_folder is: #{@@project_root_folder}"
     VERSION ||= self.own_current
   end
 end

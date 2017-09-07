@@ -1,6 +1,8 @@
 ---
-:current_version: 1.0.2
+:current_version: 1.0.3
 :release_history:
+- :version: 1.0.3
+  :released_at: 2017-09-07 18:22:33.084532000 -04:00
 - :version: 1.0.2
   :released_at: 2017-09-07 18:08:58.606758000 -04:00
 - :version: 1.0.1
