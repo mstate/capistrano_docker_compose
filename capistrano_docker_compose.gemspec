@@ -1,9 +1,12 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'yaml'
+
+version = 1
 Gem::Specification.new do |spec|
   spec.name          = 'capistrano_docker_compose'
-  spec.version       = CapistranoDockerCompose::Version.own_current
+  spec.version       = YAML.load_file('config/version.yml')[:current_version]
   spec.authors       = ["Mike State"]
   spec.email         = ["mstate@gmail.com"]
   spec.description   = %q{Docker support for Capistrano 3.x}
