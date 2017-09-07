@@ -8,11 +8,11 @@ module CapistranoDockerCompose
     # end
 
     # initialization for class
-    @@project_root_folder = if defined?(Rails)
-        Rails.root
-      else
-        Dir.pwd
-      end
+    if defined?(Rails)
+      @@project_root_folder = Rails.root
+    else
+      @@project_root_folder = Dir.pwd
+    end
 
     def self.increment!(options={})
       options[:type] ||= "incremental"
