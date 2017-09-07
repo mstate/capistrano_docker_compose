@@ -1,4 +1,6 @@
 module CapistranoDockerCompose
+  require 'yaml'
+
   class Version
     if defined?(Rails)
       PROJECT_ROOT_FOLDER = Rails.root

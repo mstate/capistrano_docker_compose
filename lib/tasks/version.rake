@@ -1,3 +1,4 @@
+require_relative '../capistrano_docker_compose/version'
 namespace :version do
   desc "Increment version (optional agument 'major', 'minor', or 'incremental'.  Incremental is the default."
   task :increment, :version_type do |task, args|
@@ -9,4 +10,5 @@ namespace :version do
       else
         CapistranoDockerCompose::Version.increment!
     end
+  end
 end
