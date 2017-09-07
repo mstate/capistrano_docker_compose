@@ -33,21 +33,23 @@ The version is in the form: major.minor.incremental
 
 and also the following class methods:
 
-    CapistranoDockerCompose::Version.current - Current version
-    CapistranoDockerCompose::Version.increment! - Increases the incremental version
+    `CapistranoDockerCompose::Version.current`    - Current version
+    `CapistranoDockerCompose::Version.increment!` - Increases the incremental version
+
 The `increment!` method also provides an optional argument type:
 
     CapistranoDockerCompose::Version.increment!(type: :major) - E.g. 1.2.3 -> 2.0.0
     CapistranoDockerCompose::Version.increment!(type: :minor) - E.g. 1.2.3 -> 1.3.0
     CapistranoDockerCompose::Version.increment!(type: :incremental) - (This is the default) E.g. 1.2.13 -> 1.2.14
 
-CapistranoDockerCompose::Version offers the following tasks:
+CapistranoDockerCompose::Version offers the following rake tasks:
 
-    rake version:increment
+    `rake version:increment`
+    `rake version:current` (or just `rake version`)
 
-and accepts optional arguments for version type:
+`version:increment` accepts optional arguments for version type:
 
-    rake version:increment["major"]
+    `rake version:increment["major"]`
 
 NB: The version of the app is used when tagging, pushing and deploying images to production.  For now, incrementing is a manual process.
 
