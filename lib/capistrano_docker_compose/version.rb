@@ -53,16 +53,6 @@ module CapistranoDockerCompose
     end
 
     def self.yaml_file
-    puts "defined?(Rails) is: #{defined?(Rails)}"
-    if defined?(Rails)
-      puts "Rails.root is: #{Rails.root}"
-    end
-    puts "Dir.pwd is: #{Dir.pwd}"
-
-      puts "@@project_root_folder is: #{@@project_root_folder}"
-        puts "full_path is #{[@@project_root_folder,"config","version.yml"].join('/')}"
-
-
       begin
         file = YAML.load_file([@@project_root_folder,"config","version.yml"].join('/'))
       rescue Errno::ENOENT => error
