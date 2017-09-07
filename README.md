@@ -11,6 +11,7 @@ Next, add following to your `Capfile`:
     require 'capistrano/docker_compose'
 
 The variables below are optional (and can be set in deploy.rb). Default values are listed.
+
     set :docker_app_service_name, "app"
     set :docker_web_service_name, "web"
     set :docker_database_service_name, "db"
