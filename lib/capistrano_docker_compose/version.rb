@@ -8,11 +8,20 @@ module CapistranoDockerCompose
     # end
 
     # initialization for class
+    puts "defined?(Rails) is: #{defined?(Rails)}"
     if defined?(Rails)
+      puts "Rails.root is: #{Rails.root}"
+    end
+    puts "Dir.pwd is: #{Dir.pwd}"
+
+    if defined?(Rails)
+      puts "initializing"
       @@project_root_folder = Rails.root
     else
       @@project_root_folder = Dir.pwd
     end
+      puts "@@project_root_folder is: #{@@project_root_folder}"
+        puts "full_path is #{[@@project_root_folder,"config","version.yml"].join('/')}"
 
     def self.increment!(options={})
       options[:type] ||= "incremental"
@@ -54,13 +63,6 @@ module CapistranoDockerCompose
 
     def self.yaml_file
       begin
-        puts "@@project_root_folder is: #{@@project_root_folder}"
-        puts "defined?(Rails) is: #{defined?(Rails)}"
-        if defined?(Rails)
-          puts "Rails.root is: #{Rails.root}"
-        end
-        puts "Dir.pwd is: #{Dir.pwd}"
-        puts "full_path is #{[@@project_root_folder,"config","version.yml"].join('/')}"
         file = YAML.load_file([@@project_root_folder,"config","version.yml"].join('/'))
       rescue Errno::ENOENT => error
         version_hash = {
