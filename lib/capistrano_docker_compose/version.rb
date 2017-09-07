@@ -7,6 +7,13 @@ module CapistranoDockerCompose
     #   @current_version = (@yaml[:current_version] || "1.0.0")
     # end
 
+    # initialization for class
+    @@project_root_folder = if defined?(Rails)
+      Rails.root
+    else
+      Dir.pwd
+    end
+
     def self.increment!(options={})
       options[:type] ||= "incremental"
       hash_from_yaml_file = Version.yaml_file
@@ -71,12 +78,6 @@ module CapistranoDockerCompose
 
     end
 
-    # initialization for class
-    @@project_root_folder = if defined?(Rails)
-      Rails.root
-    else
-      Dir.pwd
-    end
     puts "@@project_root_folder is: #{@@project_root_folder}"
     VERSION ||= self.own_current
   end
