@@ -4,11 +4,11 @@ namespace :version do
   task :increment, :version_type do |task, args|
     case args[:version_type].to_s
       when 'major'
-        CapistranoDockerCompose::Version.increment!(type: :major)
+        puts CapistranoDockerCompose::Version.increment!(type: :major)
       when 'minor'
-        CapistranoDockerCompose::Version.increment!(type: :minor)
+        puts CapistranoDockerCompose::Version.increment!(type: :minor)
       else
-        CapistranoDockerCompose::Version.increment!
+        puts CapistranoDockerCompose::Version.increment!
     end
   end
 end
