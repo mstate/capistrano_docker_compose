@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'capistrano_docker_compose'
-  spec.version       = '0.1.1'
+  spec.version       = CapistranoDockerCompose::Version.own_current
   spec.authors       = ["Mike State"]
   spec.email         = ["mstate@gmail.com"]
   spec.description   = %q{Docker support for Capistrano 3.x}

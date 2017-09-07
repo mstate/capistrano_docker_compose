@@ -2,11 +2,6 @@ module CapistranoDockerCompose
   require 'yaml'
 
   class Version
-    if defined?(Rails)
-      PROJECT_ROOT_FOLDER = Rails.root
-    else
-      PROJECT_ROOT_FOLDER = Dir.pwd
-    end
     # def initialize
     #   @yaml = Version.yaml_file
     #   @current_version = (@yaml[:current_version] || "1.0.0")
@@ -38,6 +33,14 @@ module CapistranoDockerCompose
       Version.yaml_file[:current_version]
     end
 
+    def self.own_current
+      original_project_root = @@project_root_folder
+      @@project_root_folder = Dir.pwd
+      my_version = self.current
+      @@project_root_folder = original_project_root
+      return my_version
+    end
+
     def self.replace_version_constant_in_file!(current_version)
       yaml = YAML.load_file(Rails.root.join("config","version.yml"))
       File.write('/tmp/test.yml', d.to_yaml)
@@ -45,7 +48,7 @@ module CapistranoDockerCompose
 
     def self.yaml_file
       begin
-        file = YAML.load_file([PROJECT_ROOT_FOLDER,"config","version.yml"].join('/'))
+        file = YAML.load_file([@@project_root_folder,"config","version.yml"].join('/'))
       rescue Errno::ENOENT => error
         version_hash = {
           current_version: "1.0.0",
@@ -60,7 +63,7 @@ module CapistranoDockerCompose
     end
 
     def self.update_yaml_file!(version_hash)
-      File.open([PROJECT_ROOT_FOLDER,"config","version.yml"].join('/'), 'w') do |f|
+      File.open([@@project_root_folder,"config","version.yml"].join('/'), 'w') do |f|
         f.write version_hash.to_yaml
       end
     end
@@ -68,5 +71,15 @@ module CapistranoDockerCompose
     def self.root_fo
 
     end
+
+    # initialization for class
+    @@project_root_folder = if defined?(Rails)
+      Rails.root
+    else
+      Dir.pwd
+    end
+    VERSION ||= self.own_current
+
+
   end
 end

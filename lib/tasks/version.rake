@@ -17,4 +17,8 @@ namespace :version do
   task :current do
     puts CapistranoDockerCompose::Version.current
   end
+
+  task :own_current do
+    puts CapistranoDockerCompose::Version.own_current
+  end
 end
