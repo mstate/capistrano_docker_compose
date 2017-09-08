@@ -3,7 +3,6 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'yaml'
 
-version = 1
 Gem::Specification.new do |spec|
   spec.name          = 'capistrano_docker_compose'
   spec.version       = YAML.load_file('config/version.yml')[:current_version]

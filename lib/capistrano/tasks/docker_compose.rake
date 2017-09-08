@@ -13,13 +13,13 @@ namespace :docker do
   task :first_deploy, :app_version do |task, args|
     Rake::Task["docker:set_registry_link_with_version"].invoke(args)
     run_locally do
-      with rails_env: fetch(:rails_env) do
+      # with rails_env: fetch(:rails_env) do
         Rake::Task["docker:build"].invoke(args)
         Rake::Task["docker:update_images"].invoke(args)
         Rake::Task["docker:createdb"].invoke
         Rake::Task["docker:migrate"].invoke(args)
         Rake::Task["docker:restart"].invoke(args)
-      end
+      # end
     end
   end
 
