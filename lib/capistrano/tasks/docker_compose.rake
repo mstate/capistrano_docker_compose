@@ -112,7 +112,7 @@ namespace :docker do
         # should take the environment from the docker-compose file
         # run is used instead of exec just in case the app fails to start
         # due to a migration that has not yet run (e.g. a data migration)
-        execute :"docker-compose", "run #{fetch(:docker_app_service_name)} rake db:migrate"
+        execute :"docker-compose", "run --rm #{fetch(:docker_app_service_name)} rake db:migrate"
       end
     end
   end
