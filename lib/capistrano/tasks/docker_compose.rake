@@ -109,7 +109,7 @@ namespace :docker do
     on roles :app do
       within deploy_to do
         execute :"docker-compose", "up -d #{fetch(:docker_database_service_name)}"
-        execute :"docker ", "run --rm -d #{fetch(:docker_app_registry_link_with_version)} rake RAILS_ENV=#{fetch(:rails_env)} db:migrate"
+        execute :"docker-compose", "run #{fetch(:docker_app_service_name)} rake db:migrate"
       end
     end
   end
