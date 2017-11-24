@@ -57,7 +57,13 @@ namespace :docker do
 
       # if there's an env file, link it
       if File.exists?('.env')
-        execute :ln, "-s .env #{fetch(:git_cache_folder)}/.env"
+        within fetch(:git_cache_folder) do
+          number_of_folders_to_ascend = fetch(:git_cache_folder).split('/').length
+          ascend_array = []
+          number_of_folders_to_ascend.to_i.times{ ascend_array << '..' }
+          ascend_path = ascend_array.join('/')
+          execute :ln, "-s #{ascend_path}/.env"
+        end
       end
 
       # copy any files not checked in from main repo
