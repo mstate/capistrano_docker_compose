@@ -18,7 +18,7 @@ namespace :docker do
         Rake::Task["docker:setup"].invoke(args)
         Rake::Task["docker:update_images"].invoke(args)
         Rake::Task["docker:createdb"].invoke
-        Rake::Task["docker:migrate"].invoke(args)
+        Rake::Task["docker:migrate"].invoke(args) unless fetch(:skip_migration)
         Rake::Task["docker:restart"].invoke(args)
       # end
     end
@@ -30,7 +30,7 @@ namespace :docker do
     run_locally do
       Rake::Task["docker:build"].invoke(args)
       Rake::Task["docker:update_images"].invoke(args)
-      Rake::Task["docker:migrate"].invoke(args)
+      Rake::Task["docker:migrate"].invoke(args) unless fetch(:skip_migration)
       Rake::Task["docker:restart"].invoke(args)
     end
   end
@@ -300,5 +300,6 @@ namespace :load do
     set :git_cache_folder, "tmp/git_cache_for_deploy"
     set :docker_services_for_quick_restart, %w{ app actioncable sidekiq web }
     set :traefik_directory, "/docker/compose_files_and_data/traefik"
+    set :skip_migration, false
   end
 end
