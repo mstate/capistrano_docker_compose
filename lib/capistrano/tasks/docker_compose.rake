@@ -15,6 +15,7 @@ namespace :docker do
     run_locally do
       # with rails_env: fetch(:rails_env) do
         Rake::Task["docker:build"].invoke(args)
+        Rake::Task["docker:setup"].invoke(args)
         Rake::Task["docker:update_images"].invoke(args)
         Rake::Task["docker:createdb"].invoke
         Rake::Task["docker:migrate"].invoke(args)
@@ -52,6 +53,11 @@ namespace :docker do
           execute :git, "clone #{fetch(:repository)} ."
           execute :git, "checkout origin/#{fetch(:branch, "master")}"
         end
+      end
+
+      # if there's an env file, link it
+      if File.exists?('.env')
+        execute :ln, "-s .env #{fetch(:git_cache_folder)}/.env"
       end
 
       # copy any files not checked in from main repo
