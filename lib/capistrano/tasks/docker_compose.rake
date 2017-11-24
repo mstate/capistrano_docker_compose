@@ -240,7 +240,9 @@ namespace :docker do
           execute :docker, "create --name #{container_name} #{fetch(:docker_app_registry_link_with_version)}"
 
           # copy compiled assets to local folder
-          execute :docker, "cp #{container_name}:/app/public/ ./deleteme/"
+          if system("docker run #{container_name} ls /app/public")
+            execute :docker, "cp #{container_name}:/app/public/ ./deleteme/"
+          end
           execute :docker, "rm -v #{container_name}"
 
           # build and tag
@@ -282,7 +284,7 @@ namespace :load do
     set :registry, 'registry.modus-ops.com'
     set :docker_web_registry_link, "#{fetch(:registry)}/#{fetch(:application)}/web"
     set :docker_app_registry_link, "#{fetch(:registry)}/#{fetch(:application)}/app"
-    set :branch, "asset_class_computation"
+    set :branch, "master"
     set :git_cache_folder, "tmp/git_cache_for_deploy"
     set :docker_services_for_quick_restart, %w{ app actioncable sidekiq web }
     set :traefik_directory, "/docker/compose_files_and_data/traefik"
