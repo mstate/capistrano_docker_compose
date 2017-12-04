@@ -216,7 +216,7 @@ namespace :docker do
     on roles :app do
       within deploy_to do
         # with rails_env: fetch(:rails_env) do
-        execute "source #{fetch(:deploy_to)}/.env; docker login -u $REGISTRY_USER -p $REGISTRY_PASS #{fetch(:registry)}"
+        execute "source #{deploy_to}/.env; docker login -u $REGISTRY_USER -p $REGISTRY_PASS #{fetch(:registry)}"
         execute :pwd
         execute :"docker-compose", :pull
         # end
