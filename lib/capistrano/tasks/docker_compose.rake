@@ -191,10 +191,17 @@ namespace :docker do
       else
         # if it's using the same image as app, update it with app
         base_registry_image = fetch(:docker_app_registry_link_with_version).split(/:/)[0]
+
+        # Macro substitution to keep docker-compose.prod.yml file generic        
+        docker_app_registry_link_from_file = consolidated_yaml["services"][service]["image"].
+          gsub(/\${APPLICATION_NAME}/, fetch(:application)).
+          gsub(/\${APP_VERSION:-latest}/, args[:app_version] || CapistranoDockerCompose::Version.current)
+          
         # if it's using the same image as app, update it with app
-        if consolidated_yaml["services"][service]["image"] =~ /#{base_registry_image}/
+        if  docker_app_registry_link_from_file =~ /#{base_registry_image}/
           consolidated_yaml["services"][service]["image"] = fetch(:docker_app_registry_link_with_version)
-        end      end
+        end      
+      end
     end
 
     # write the consolidated file
