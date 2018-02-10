@@ -1,6 +1,8 @@
 ---
-:current_version: 1.0.36
+:current_version: 1.0.37
 :release_history:
+- :version: 1.0.37
+  :released_at: 2018-02-10 07:30:09.518196000 -05:00
 - :version: 1.0.36
   :released_at: 2018-02-10 01:16:44.471006000 -05:00
 - :version: 1.0.35

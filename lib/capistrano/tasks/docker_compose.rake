@@ -274,8 +274,9 @@ namespace :docker do
 
   desc "set registry link with version variables"
   task :set_registry_link_with_version do |task, args|
-    puts "received args #{args} with app version #{args[:app_version]}"
+    puts "received args #{args} with app version '#{args[:app_version]}'"
     docker_image_version = args[:app_version] || CapistranoDockerCompose::Version.current
+    puts "docker_image_version is #{docker_image_version}"
     set :docker_app_registry_link_with_version, "#{fetch(:docker_app_registry_link)}:#{docker_image_version}"
     if fetch(:docker_web_service_name)
       set :docker_web_registry_link_with_version, "#{fetch(:docker_web_registry_link)}:#{docker_image_version}"
