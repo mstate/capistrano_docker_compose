@@ -252,8 +252,8 @@ namespace :docker do
           execute :docker, "create --name #{container_name} #{fetch(:docker_app_registry_link_with_version)}"
 
           # copy compiled assets to local folder
-          if system("docker run #{container_name} ls /app/public")
-            execute :docker, "cp #{container_name}:/app/public/ ./deleteme/"
+          if system("docker run #{fetch(:docker_app_registry_link_with_version)} ls /app/public")
+            execute :docker, "  }:/app/public/ ./deleteme/"
           end
           execute :docker, "rm -v #{container_name}"
 
