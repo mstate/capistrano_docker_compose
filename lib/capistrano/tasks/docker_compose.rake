@@ -31,7 +31,7 @@ namespace :docker do
       Rake::Task["docker:build"].invoke(args)
       Rake::Task["docker:update_images"].invoke(args)
       Rake::Task["docker:migrate"].invoke(args) unless fetch(:skip_migration)
-      Rake::Task["docker:restart"].invoke(args)
+      Rake::Task["docker:quick_restart"].invoke(args)
     end
   end
 
@@ -120,11 +120,21 @@ namespace :docker do
     Rake::Task["docker:set_registry_link_with_version"].invoke(args)
     on roles :app do
       within deploy_to do
+        execute :"docker-compose", 'down'
         execute :"docker-compose", "up -d #{fetch(:docker_database_service_name)}"
         # should take the environment from the docker-compose file
         # run is used instead of exec just in case the app fails to start
         # due to a migration that has not yet run (e.g. a data migration)
-        execute :"docker-compose", "run --rm #{fetch(:docker_app_service_name)} rake db:migrate"
+        execute :"docker-compose", "run --rm #{fetch(:docker_migrate_app_service_name)} rake db:migrate"
+      end
+    end
+  end
+
+  desc "Full restart of all services in the docker-compose file"
+  task :quick_restart do
+    on roles :app do
+      within deploy_to do
+        execute :"docker-compose", "up -d "
       end
     end
   end
@@ -275,6 +285,17 @@ namespace :docker do
 
         # check-in rails image
         execute :docker, "push #{fetch(:docker_app_registry_link_with_version)}"
+
+        # build other services
+        yamls = []
+        fetch(:docker_compose_files).each do |file|
+          yamls << YAML.load_file(file)
+        end
+        consolidated_yaml = {}
+        while yamls.length > 0
+          consolidated_yaml.merge_docker_hash! yamls.shift
+        end
+
       end
     end
   end
@@ -309,5 +330,6 @@ namespace :load do
     set :docker_services_for_quick_restart, %w{ app actioncable sidekiq web }
     set :traefik_directory, "/docker/compose_files_and_data/traefik"
     set :skip_migration, false
+    set :docker_migrate_app_service_name, fetch(:docker_app_service_name)
   end
 end
