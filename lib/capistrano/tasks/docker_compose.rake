@@ -91,7 +91,7 @@ namespace :docker do
         (yaml["services"][service]["volumes"] || []).each do |volume|
           volume_array = volume.split(/:/)
           if volume_array.length > 1
-            server_folder = volume_array[0]
+            server_folder = volume_array[0].gsub('${DEPLOY_TO_DIRECTORY}', deploy_to)
             on roles :app do
               execute :mkdir, "-p #{server_folder}"
             end
