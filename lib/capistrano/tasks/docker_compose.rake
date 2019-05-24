@@ -62,7 +62,7 @@ namespace :docker do
           ascend_array = []
           number_of_folders_to_ascend.to_i.times{ ascend_array << '..' }
           ascend_path = ascend_array.join('/')
-          execute :ln, "-sf #{ascend_path}/.env"
+          execute :cp, "#{ascend_path}/.env .env"
         end
       end
 

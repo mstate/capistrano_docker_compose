@@ -1,6 +1,8 @@
 ---
-:current_version: 1.0.41
+:current_version: 1.0.42
 :release_history:
+- :version: 1.0.42
+  :released_at: 2019-05-24 13:17:44.468649000 -04:00
 - :version: 1.0.41
   :released_at: 2019-05-14 12:21:40.118549000 -04:00
 - :version: 1.0.40
