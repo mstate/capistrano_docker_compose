@@ -203,8 +203,8 @@ namespace :docker do
         base_registry_image = fetch(:docker_app_registry_link_with_version).split(/:/)[0]
 
         # Macro substitution to keep docker-compose.prod.yml file generic        
-        docker_app_registry_link_from_file = consolidated_yaml["services"][service]["image"].
-          gsub(/\${APPLICATION_NAME}/, fetch(:application)).
+        docker_app_registry_link_from_file = consolidated_yaml.dig('services', service, 'image')&.
+          gsub(/\${APPLICATION_NAME}/, fetch(:application))&.
           gsub(/\${APP_VERSION:-latest}/, args[:app_version] || CapistranoDockerCompose::Version.current)
           
         # if it's using the same image as app, update it with app
@@ -233,7 +233,11 @@ namespace :docker do
     on roles :app do
       within deploy_to do
         # with rails_env: fetch(:rails_env) do
-        execute "source #{deploy_to}/.env; docker login -u $REGISTRY_USER -p $REGISTRY_PASS #{fetch(:registry)}"
+        # execute 'eval "$(cat /docker/compose_files_and_data/srcanada-staging/.env | grep REGISTRY_)"'
+        # execute "source #{deploy_to}/.env; docker login -u $REGISTRY_USER -p $REGISTRY_PASS #{fetch(:registry)}"
+        execute ''
+        execute "eval \"$(cat #{deploy_to}/.env | grep REGISTRY_)\";" \
+          + " docker login -u $REGISTRY_USER -p $REGISTRY_PASS #{fetch(:registry)}"
         execute :pwd
         execute :"docker-compose", :pull
         # end
