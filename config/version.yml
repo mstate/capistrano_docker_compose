@@ -1,6 +1,8 @@
 ---
-:current_version: 2.1.8
+:current_version: 2.1.9
 :release_history:
+- :version: 2.1.9
+  :released_at: 2020-03-01 16:35:53.308368000 -05:00
 - :version: 2.1.8
   :released_at: 2020-02-23 20:56:34.236496000 -05:00
 - :version: 2.1.7

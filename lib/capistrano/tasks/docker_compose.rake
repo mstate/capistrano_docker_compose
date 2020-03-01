@@ -35,6 +35,16 @@ namespace :docker do
     end
   end
 
+  desc "deploy previously built image"
+  task :quick_deploy, :app_version do |task, args|
+    Rake::Task["docker:set_registry_link_with_version"].invoke(args)
+    run_locally do
+      Rake::Task["docker:update_images"].invoke(args)
+      Rake::Task["docker:migrate"].invoke(args) unless fetch(:skip_migration)
+      Rake::Task["docker:quick_restart"].invoke(args)
+    end
+  end
+
   desc "Checkout specified version or latest from Git and use that director for deploy."
   task :grab_from_git, :app_version do |task, args|
     run_locally do
