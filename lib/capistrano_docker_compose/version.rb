@@ -31,7 +31,7 @@ module CapistranoDockerCompose
       end
       new_version = version_elements.join(".")
       hash_from_yaml_file[:current_version] = new_version
-      hash_from_yaml_file[:release_history].unshift({version: new_version, released_at: Time.now})
+      hash_from_yaml_file[:release_history].unshift({version: new_version, released_at: Time.now.to_s})
       Version.update_yaml_file!(hash_from_yaml_file)
       return new_version
     end
